@@ -11,7 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 3f;
     private float sprint = 1f;
     public float maxFuel = 100f;
-    public float jetpackBoost = 5f;
+    public float jetpackBoost = 30f;
+    public float noJetpackBoost = 1f;
     public float jumpSpeed = 10f;
     public float fuel = 10f;
 
@@ -30,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
+        
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
@@ -41,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = transform.right * x + transform.forward * z;
 
-        controller.Move(move * sprint * jetpackBoost * speed * Time.deltaTime);
+        controller.Move(move * sprint * speed * Time.deltaTime);
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
@@ -65,16 +66,25 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && fuel > 0)
         {
-            velocity.y = jumpSpeed;
-            fuel -= 10 * Time.deltaTime;
+            velocity.y = jetpackBoost;
+            fuel -= 10;
             print(fuel);
+            flying = true;
         }
 
-        else if (fuel < maxFuel && isGrounded == true)
+        if (Input.GetKeyUp(KeyCode.E) || fuel < maxFuel && isGrounded == true)
         {
-            fuel += 10 * Time.deltaTime;
+            fuel += 10;
             print(fuel);
+
+            if (flying)
+             {
+                velocity.y = noJetpackBoost;
+                flying = false;
+             }
+            
         }
+                
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);

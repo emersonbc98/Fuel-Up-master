@@ -279,9 +279,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 133932841}
-  speed: 12
+  speed: 10
   gravity: -19.62
   jumpHeight: 3
+  maxFuel: 100
+  jetpackBoost: 25
+  noJetpackBoost: 1
+  jumpSpeed: 10
+  fuel: 10
   sprintSpeed: 1.5
   normalSpeed: 1
   groundCheck: {fileID: 848375616}
@@ -290,6 +295,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   sprinting: 0
+  flying: 0
 --- !u!1 &186341197
 GameObject:
   m_ObjectHideFlags: 0
